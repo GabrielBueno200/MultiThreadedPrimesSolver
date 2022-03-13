@@ -1,13 +1,20 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace PrimeNumbersThreaded.PrimesSolver
 {
-    public class SimpleSolver : PrimesSolver
+    public sealed class SimpleSolver : PrimesSolver
     {
-        protected override int Solve(IList<int> numbers, out int executionTime)
+        public override int Solve(IList<int> numbers, out long elapsedMs)
         {
+            var timer = new Stopwatch();
+            timer.Start();
+
             var primesAmount = FindPrimesAmount(numbers);
-            executionTime = 0;
+
+            timer.Stop();
+
+            elapsedMs = timer.ElapsedMilliseconds;
 
             return primesAmount;
         }

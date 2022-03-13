@@ -18,7 +18,7 @@ namespace PrimeNumbersThreaded.Extensions
             var counter = start;
             while (counter <= end)
             {
-                yield return (int) counter;
+                yield return counter;
                 counter += step;
             }
         }

@@ -11,13 +11,18 @@ namespace PrimeNumbersThreaded
         /// <returns>true if number is prime otherwise false</returns>
         public static bool IsPrime(this int number)
         {
-            if (number == 2) return true;
-            
-            if (number < 2 || number % 2 == 0) return false;
-            
-            for (var i = 3; i <= Math.Sqrt(number); i += 2)
-                if (number % i == 0) return false;
-            
+            if (number <= 3) return number > 1;
+
+            if (number % 2 == 0 || number % 3 == 0) return false;
+
+            var count = 5;
+
+            while (count * count <= number)
+            {
+                if (number % count == 0 || number % (count + 2) == 0) return false;
+                count += 6;
+            }
+
             return true;
         }
     }

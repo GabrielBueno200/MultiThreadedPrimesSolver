@@ -3,47 +3,47 @@ using System.Collections.Generic;
 using System;
 using PrimeNumbersThreaded.Extensions;
 using System.Threading;
+using System.Diagnostics;
 
 namespace PrimeNumbersThreaded.PrimesSolver
 {
     public sealed class ThreadedSolver : PrimesSolver
     {
-        public int ThreadsAmount { get; set; };
+        public int ThreadsAmount { get; set; }
 
-        /// <summary>
-        /// Splits the intervals of numbers that will be solved by each thread, 
-        /// which are separated two by two in the returned list 
-        /// </summary>
-        /// <param name="numbers"></param>
-        /// <returns></returns>
-        private IList<int> GetThreadsIntervals(IList<int> numbers)
-        {
-            var numbersAmount = numbers.Count;
-            var step = (int) Math.Ceiling( (decimal) numbersAmount / ThreadsAmount);
-            var range = new List<int>().RangeWithStep(start: 0, end: numbersAmount + step, step);
-
-            return range.ToList();
-        }
+        private List<Thread> Threads { get; set; } = new List<Thread>(); 
 
         /// <inheritdoc/>
-        protected override int Solve(IList<int> numbers, out int executionTime)
+        public override int Solve(IList<int> numbers, out long elapsedMs)
         {
-            var primesAmount = 0;
-            executionTime = 0;
+            var primesAmountInIntervals = new List<int>();
 
-            var threadsIntervals = GetThreadsIntervals(numbers);
+            var timer = new Stopwatch();
+            timer.Start();
 
-            for(var i = 0; i < ThreadsAmount; i++)
+            #region solving with threads
+            var numbersAmount = numbers.Count;
+            var step = Convert.ToInt32(numbersAmount / ThreadsAmount);
+
+            for (int i = 0, intervalBegin = 0; i < ThreadsAmount; i++, intervalBegin += step)
             {
-                var intervalBegin = threadsIntervals.ElementAt(i);
-                var intervalEnd = threadsIntervals.ElementAt(i + 1);
-                var intervalNumbers = numbers.ToList().GetRange(intervalBegin, intervalEnd);
-                
-                var thread = new Thread(() => primesAmount += FindPrimesAmount(intervalNumbers));
+                var intervalNumbers = numbers.ToList().GetRange(intervalBegin, step);
+
+                var thread = new Thread(() => primesAmountInIntervals.Add(FindPrimesAmount(intervalNumbers)));
                 thread.Start();
+                Threads.Add(thread);
             }
 
-            return 0;
+            foreach (var thread in Threads)
+                thread.Join(); // wait thread finish
+
+            var totalPrimesAmount = primesAmountInIntervals.Sum();
+            #endregion
+
+            timer.Stop();
+
+            elapsedMs = timer.ElapsedMilliseconds;
+            return totalPrimesAmount;
         }
     }
 }
