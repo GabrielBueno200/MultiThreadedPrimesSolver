@@ -1,6 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
+using System.Collections.Generic;
 using System.Windows.Forms.DataVisualization.Charting;
 
 namespace PrimeNumbersThreaded.Graphics
@@ -20,7 +20,7 @@ namespace PrimeNumbersThreaded.Graphics
             var series = new Series
             {
                 Name = chart.Name,
-                Color = System.Drawing.Color.Green,
+                Color = Color.Green,
                 IsVisibleInLegend = false,
                 IsValueShownAsLabel = true,
                 IsXValueIndexed = true,

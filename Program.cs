@@ -24,15 +24,8 @@ namespace PrimeNumbersThreaded
             // dataset numbers
             var numbers = Utils.LoadNumbersFromCsv(csvFileName: "Dataset.csv").ToList();
 
-            Executer.ExecuteFromThreadRange(numbers, 10);
+            Executer.ExecuteFromThreadRange(numbers, maxThreadsAmount: 50);
             
-            /*
-            Console.WriteLine($"Analyzing {numbers.Count} numbers");
-
-            Executer.ExecuteSimpleSolution(numbers);
-            Executer.ExecuteThreadedSolution(numbers);
-            */
-
             Console.ReadLine();
         }
 

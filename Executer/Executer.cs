@@ -39,10 +39,12 @@ namespace PrimeNumbersThreaded.Tests
         {
             IDictionary<int, long> threadExecutions = new Dictionary<int, long>();
 
-            var minThreadAsmount = 2;
+            var minThreadAsmount = 1;
             for (var threadAmount = minThreadAsmount; threadAmount <= maxThreadsAmount; threadAmount++)
             {
-                new ThreadedSolver { ThreadsAmount = threadAmount }.Solve(numbers, out var executionTime);
+                var primesAmount = new ThreadedSolver { ThreadsAmount = threadAmount }.Solve(numbers, out var executionTime);
+
+                Console.WriteLine($"Found {primesAmount} primes after {threadAmount} threads executed in {executionTime} ms");
 
                 threadExecutions.Add(threadAmount, executionTime);
             }

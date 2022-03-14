@@ -42,7 +42,6 @@ namespace PrimeNumbersThreaded.Graphics
 
             chartArea.Name = title;
             chart.ChartAreas.Add(chartArea);
-            ConfigureAxis();
 
             // Legends
             legend.Name = "Legend1";
@@ -52,6 +51,8 @@ namespace PrimeNumbersThreaded.Graphics
             chart.Size = new Size(1000, 700);
 
             chart.Location = new Point(0, 0);
+
+            ConfigureAxis();
         }
 
         private void InitializeForm(string title)
