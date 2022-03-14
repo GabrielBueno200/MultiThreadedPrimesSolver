@@ -3,7 +3,7 @@ using System.Linq;
 using System.Windows.Forms;
 using System.Runtime.InteropServices;
 using PrimeNumbersThreaded.Utilities;
-using PrimeNumbersThreaded.Tests;
+using PrimeNumbersThreaded.Forms;
 
 namespace PrimeNumbersThreaded
 {
@@ -16,16 +16,16 @@ namespace PrimeNumbersThreaded
             Application.SetCompatibleTextRenderingDefault(false);
             AllocConsole(); // Enable console
 
-            SolvePrimes();
+            ShowPrimesSolveOptions();
         }
 
-        private static void SolvePrimes()
+        private static void ShowPrimesSolveOptions()
         {
-            // dataset numbers
             var numbers = Utils.LoadNumbersFromCsv(csvFileName: "Dataset.csv").ToList();
 
-            Executer.ExecuteFromThreadRange(numbers, maxThreadsAmount: 50);
+            Application.Run(new GraphicsOptionsForm(numbers));
             
+            // Prevents close console 
             Console.ReadLine();
         }
 

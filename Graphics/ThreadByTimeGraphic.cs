@@ -5,7 +5,7 @@ using System.Windows.Forms.DataVisualization.Charting;
 
 namespace PrimeNumbersThreaded.Graphics
 {
-    public class ThreadByTimeGraphic : Graphic
+    public sealed class ThreadByTimeGraphic : Graphic
     {
         private IDictionary<int, long> ThreadExecutions { get; set; }
 

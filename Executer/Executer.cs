@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Windows.Forms;
 using PrimeNumbersThreaded.Extensions;
-using PrimeNumbersThreaded.Graphics;
 using PrimeNumbersThreaded.PrimesSolver;
 
 namespace PrimeNumbersThreaded.Tests
@@ -39,8 +37,8 @@ namespace PrimeNumbersThreaded.Tests
         {
             IDictionary<int, long> threadExecutions = new Dictionary<int, long>();
 
-            var minThreadAsmount = 1;
-            for (var threadAmount = minThreadAsmount; threadAmount <= maxThreadsAmount; threadAmount++)
+            var minThreadsAmount = 1;
+            for (var threadAmount = minThreadsAmount; threadAmount <= maxThreadsAmount; threadAmount++)
             {
                 var primesAmount = new ThreadedSolver { ThreadsAmount = threadAmount }.Solve(numbers, out var executionTime);
 
@@ -49,25 +47,7 @@ namespace PrimeNumbersThreaded.Tests
                 threadExecutions.Add(threadAmount, executionTime);
             }
 
-            Application.Run(new ThreadByTimeGraphic(threadExecutions));
-
             return threadExecutions;
-        }
-
-        public static void ExecuteSimpleSolution(IList<int> numbers)
-        {
-            var simpleSolver = new SimpleSolver();
-            var primeNumbers = simpleSolver.Solve(numbers, out var simpleExecutionTime);
-
-            Console.WriteLine($"Found {primeNumbers} primes in {simpleExecutionTime} ms without threads");
-        }
-
-        public static void ExecuteThreadedSolution(IList<int> numbers, int threadsAmount = 1)
-        {
-            var threadedSolver = new ThreadedSolver { ThreadsAmount = threadsAmount };
-            var primeNumbersThreaded = threadedSolver.Solve(numbers, out var threadedExecutionTime);
-
-            Console.WriteLine($"Found {primeNumbersThreaded} primes in {threadedExecutionTime} ms with {threadsAmount} threads");
         }
 
     }
