@@ -12,7 +12,7 @@ namespace PrimeNumbersThreaded.Tests
         /// </summary>
         /// <param name="numbers">numbers list</param>
         /// <param name="maxThreadsAmount">max threads amount</param>
-        /// <returns></returns>
+        /// <returns>Dictionary containing the threads amount as key and its respective execution time as value</returns>
         public static IDictionary<int, long> ExecuteFromThreadRange(IList<int> numbers, int maxThreadsAmount)
         {
             IDictionary<int, long> threadExecutions = new Dictionary<int, long>();
