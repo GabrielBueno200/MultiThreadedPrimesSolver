@@ -18,14 +18,14 @@ namespace PrimeNumbersThreaded.Graphics
 
         protected abstract void Plot(object sender, EventArgs e);
 
-        protected void ConfigureAxis()
+        protected void ConfigureAxis(string XAxisTitle, string YAxisTitle)
         {
             var chartArea = chart.ChartAreas[chart.Name];
 
-            chartArea.AxisX.Title = "Thread Amount";
+            chartArea.AxisX.Title = XAxisTitle;
             chartArea.AxisX.TitleFont = new Font("Arial", 10.0f);
 
-            chartArea.AxisY.Title = "Time (ms)";
+            chartArea.AxisY.Title = YAxisTitle;
             chartArea.AxisY.TitleFont = new Font("Arial", 10.0f);
         }
 
@@ -51,8 +51,6 @@ namespace PrimeNumbersThreaded.Graphics
             chart.Size = new Size(1000, 700);
 
             chart.Location = new Point(0, 0);
-
-            ConfigureAxis();
         }
 
         private void InitializeForm(string title)

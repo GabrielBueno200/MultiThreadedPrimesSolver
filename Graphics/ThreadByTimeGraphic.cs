@@ -15,8 +15,8 @@ namespace PrimeNumbersThreaded.Graphics
 
         protected override void Plot(object sender, EventArgs e)
         {
-            // Series
             chart.Series.Clear();
+
             var series = new Series
             {
                 Name = chart.Name,
@@ -37,6 +37,8 @@ namespace PrimeNumbersThreaded.Graphics
                 var executionTime = threadExecution.Value;
                 series.Points.AddXY(threadAmount, executionTime);
             }
+
+            ConfigureAxis(XAxisTitle: "Threads Amount", YAxisTitle: "Time(ms)");
 
             chart.Invalidate();
         }

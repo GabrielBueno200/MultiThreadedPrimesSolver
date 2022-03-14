@@ -24,9 +24,6 @@ namespace PrimeNumbersThreaded
             var numbers = Utils.LoadNumbersFromCsv(csvFileName: "Dataset.csv").ToList();
 
             Application.Run(new GraphicsOptionsForm(numbers));
-            
-            // Prevents close console 
-            Console.ReadLine();
         }
 
         [DllImport("kernel32.dll", SetLastError = true)]
