@@ -1,7 +1,6 @@
 ﻿using System.Linq;
 using System.Collections.Generic;
 using System;
-using PrimeNumbersThreaded.Extensions;
 using System.Threading;
 using System.Diagnostics;
 
