@@ -1,7 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
 using System.Linq;
+using System.Drawing;
+using System.Collections.Generic;
 using System.Windows.Forms.DataVisualization.Charting;
 
 namespace PrimeNumbersThreaded.Graphics
@@ -20,7 +20,7 @@ namespace PrimeNumbersThreaded.Graphics
             #region none threads series
             var noneThreadSeries = new Series
             {
-                Name = "None threads series",
+                Name = "None threads",
                 Color = Color.Black,
                 IsVisibleInLegend = true,
                 IsValueShownAsLabel = true,
@@ -35,7 +35,7 @@ namespace PrimeNumbersThreaded.Graphics
             #region few threads series
             var fewThreadSeries = new Series
             {
-                Name = "Few threads series",
+                Name = "Few threads",
                 Color = Color.Green,
                 IsVisibleInLegend = true,
                 IsValueShownAsLabel = true,
@@ -50,7 +50,7 @@ namespace PrimeNumbersThreaded.Graphics
             #region many threads series
             var manyThreadSeries = new Series
             {
-                Name = "High threads series",
+                Name = "Many threads",
                 Color = Color.Red,
                 IsVisibleInLegend = true,
                 IsValueShownAsLabel = true,

@@ -27,6 +27,9 @@ namespace PrimeNumbersThreaded.Graphics
 
             chartArea.AxisY.Title = YAxisTitle;
             chartArea.AxisY.TitleFont = new Font("Arial", 10.0f);
+
+            chartArea.AxisX.MajorGrid.LineDashStyle = ChartDashStyle.NotSet;
+            chartArea.AxisY.MajorGrid.LineDashStyle = ChartDashStyle.NotSet;
         }
 
         private void InitializeGraphic(string title)

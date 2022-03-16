@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using PrimeNumbersThreaded.Extensions;
 using PrimeNumbersThreaded.PrimesSolver;
 
@@ -67,7 +66,7 @@ namespace PrimeNumbersThreaded.Tests
             }
 
             var median = executions.Median();
-            Console.WriteLine($"Execution time average: {median} ms\n");
+            Console.WriteLine($"Execution time median: {median} ms\n");
 
             return (threadAmount, median);
         }

@@ -1,37 +1,57 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Drawing;
+using System.Collections.Generic;
 using System.Windows.Forms.DataVisualization.Charting;
 
 namespace PrimeNumbersThreaded.Graphics
 {
     public class ThreadBySpeedUpGraphic : Graphic
     {
-        private IEnumerable<(int, double)> ThreadedSolvesSpeedUps { get; set; }
+        private readonly IEnumerable<(int, double)> ThreadedSolvesSpeedUps;
 
-        public ThreadBySpeedUpGraphic(IEnumerable<(int, double)> threadedSolveSpeedUps) : base("Threads Amount X SpeedUp")
+        private readonly double SpeedUpsError;
+
+        public ThreadBySpeedUpGraphic(
+            IEnumerable<(int, double)> threadedSolveSpeedUps, 
+            double speedUpErrors
+        ) : base("Threads Amount X SpeedUp")
         {
             ThreadedSolvesSpeedUps = threadedSolveSpeedUps;
+            SpeedUpsError = speedUpErrors;
         }
 
         protected override void Plot(object sender, EventArgs e)
         {
+            chart.Series.Clear();
 
             var series = new Series
             {
                 Name = "Thread Amount X SpeedUp",
-                Color = Color.Black,
+                Color = Color.Red,
                 IsVisibleInLegend = false,
                 IsValueShownAsLabel = true,
                 XValueMember = "Thread Amount",
                 YValueMembers = "Speedup",
-                ChartType = SeriesChartType.FastLine
+                ChartType = SeriesChartType.ErrorBar,
+                MarkerColor = Color.Black,
+                MarkerSize = 5
             };
 
+            series["ErrorBarType"] = "StandardDeviation";
+            series["ErrorBarCenterMarkerStyle"] = "Circle";
+            series["ErrorBarStyle"] = "Both";
+
             chart.Series.Add(series);
+            
+            var digits = 2;
 
             foreach(var (threadAmount, speedUp) in ThreadedSolvesSpeedUps)
-                series.Points.AddXY(threadAmount, speedUp);
+            {
+                var upperBoundError = Math.Round(speedUp + SpeedUpsError, digits);
+                var lowerBoundError = Math.Round(speedUp - SpeedUpsError, digits);
+
+                series.Points.AddXY(threadAmount, Math.Round(speedUp, digits), lowerBoundError, upperBoundError);
+            }
 
             ConfigureAxis(XAxisTitle: "Threads Amount", YAxisTitle: "SpeedUp");
 
