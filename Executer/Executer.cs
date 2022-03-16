@@ -43,25 +43,24 @@ namespace PrimeNumbersThreaded.Tests
             Console.WriteLine($"Executions with {threadAmount} threads");
             Console.WriteLine($"========================================");
 
-
-            for (var executionIndex = 0; executionIndex < timesToExecute; executionIndex++)
+            for (var executionIndex = 1; executionIndex <= timesToExecute; executionIndex++)
             {
-                Console.Write($"Execution {executionIndex + 1} - ");
+                Console.Write($"Execution {executionIndex} - ");
                 if (threadAmount > 0)
                 {
                     var primesAmount = new ThreadedSolver { ThreadsAmount = threadAmount }.Solve(numbers, out var threadedSolverExecutionTime);
                     executions.Add(threadedSolverExecutionTime);
 
-                    Console.Write($"{primesAmount} primes found\n");
-                    Console.Write($"finished in {threadedSolverExecutionTime} ms\n");
+                    Console.WriteLine($"{primesAmount} primes found");
+                    Console.WriteLine($"finished in {threadedSolverExecutionTime} ms");
                 }
                 else
                 {
                     var primesAmount = new SimpleSolver().Solve(numbers, out var simpleSolverExecutionTime);
                     executions.Add(simpleSolverExecutionTime);
 
-                    Console.Write($"{primesAmount} primes found\n");
-                    Console.Write($"finished in {simpleSolverExecutionTime} ms\n");
+                    Console.WriteLine($"{primesAmount} primes found");
+                    Console.WriteLine($"finished in {simpleSolverExecutionTime} ms");
                 }
 
                 Console.WriteLine();
@@ -70,7 +69,7 @@ namespace PrimeNumbersThreaded.Tests
             var median = executions.Median();
             Console.WriteLine($"Execution time average: {median} ms\n");
 
-            return (threadAmount, executions.Median());
+            return (threadAmount, median);
         }
 
     }
