@@ -8,6 +8,12 @@
     <Compile Update="Graphics\Graphic.cs">
       <SubType>Form</SubType>
     </Compile>
+    <Compile Update="Graphics\ThreadAmountComparisonGraphic.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="Graphics\ThreadBySpeedUpGraphic.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="Graphics\ThreadByTimeGraphic.cs">
       <SubType>Form</SubType>
     </Compile>

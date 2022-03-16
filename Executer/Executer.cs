@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using PrimeNumbersThreaded.Extensions;
 using PrimeNumbersThreaded.PrimesSolver;
 
@@ -13,11 +14,10 @@ namespace PrimeNumbersThreaded.Tests
         /// <param name="numbers">numbers list</param>
         /// <param name="maxThreadsAmount">max threads amount</param>
         /// <returns>Dictionary containing the threads amount as key and its respective execution time as value</returns>
-        public static IDictionary<int, long> ExecuteFromThreadRange(IList<int> numbers, int maxThreadsAmount)
+        public static IDictionary<int, long> ExecuteFromThreadRange(IList<int> numbers, int maxThreadsAmount, int minThreadsAmount = 1)
         {
             IDictionary<int, long> threadExecutions = new Dictionary<int, long>();
 
-            var minThreadsAmount = 1;
             for (var threadAmount = minThreadsAmount; threadAmount <= maxThreadsAmount; threadAmount++)
             {
                 var primesAmount = new ThreadedSolver { ThreadsAmount = threadAmount }.Solve(numbers, out var executionTime);
@@ -36,27 +36,41 @@ namespace PrimeNumbersThreaded.Tests
         /// <param name="numbers">numbers list</param>
         /// <param name="timesToExecute">number of executions</param>
         /// <param name="threadsAmount">threads amount</param>
-        public static void RepeatSolverExecutions(IList<int> numbers, int timesToExecute = 10, int threadsAmount = 5
-        )
+        public static (int, double) RepeatThreadedSolverExecutions(IList<int> numbers, int timesToExecute, int threadAmount)
         {
-            IList<long> SimpleExecutions = new List<long>();
-            IList<long> ThreadedExecutions = new List<long>();
+            var executions = new List<long>();
+
+            Console.WriteLine($"Executions with {threadAmount} threads");
+            Console.WriteLine($"========================================");
+
 
             for (var executionIndex = 0; executionIndex < timesToExecute; executionIndex++)
             {
-                new SimpleSolver().Solve(numbers, out var simpleSolverExecutionTime);
-                new ThreadedSolver { ThreadsAmount = threadsAmount }.Solve(numbers, out var threadedSolverExecutionTime);
+                Console.Write($"Execution {executionIndex + 1} - ");
+                if (threadAmount > 0)
+                {
+                    var primesAmount = new ThreadedSolver { ThreadsAmount = threadAmount }.Solve(numbers, out var threadedSolverExecutionTime);
+                    executions.Add(threadedSolverExecutionTime);
 
-                SimpleExecutions.Add(simpleSolverExecutionTime);
-                ThreadedExecutions.Add(threadedSolverExecutionTime);
+                    Console.Write($"{primesAmount} primes found\n");
+                    Console.Write($"finished in {threadedSolverExecutionTime} ms\n");
+                }
+                else
+                {
+                    var primesAmount = new SimpleSolver().Solve(numbers, out var simpleSolverExecutionTime);
+                    executions.Add(simpleSolverExecutionTime);
+
+                    Console.Write($"{primesAmount} primes found\n");
+                    Console.Write($"finished in {simpleSolverExecutionTime} ms\n");
+                }
+
+                Console.WriteLine();
             }
 
-            var medianSimpleSolveTime = SimpleExecutions.Median();
-            var medianThreadedSolveTime = ThreadedExecutions.Median();
+            var median = executions.Median();
+            Console.WriteLine($"Execution time average: {median} ms\n");
 
-            Console.WriteLine($"Results after {timesToExecute} executions:");
-            Console.WriteLine($"Average execution time without threads: ${medianSimpleSolveTime} ms");
-            Console.WriteLine($"TAverage execution time with {threadsAmount} threads: ${medianThreadedSolveTime}");
+            return (threadAmount, executions.Median());
         }
 
     }

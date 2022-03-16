@@ -9,7 +9,8 @@ namespace PrimeNumbersThreaded.Graphics
     {
         private IDictionary<int, long> ThreadExecutions { get; set; }
 
-        public ThreadByTimeGraphic(IDictionary<int, long> executions) : base("Thread X Time") {
+        public ThreadByTimeGraphic(IDictionary<int, long> executions) : base("Thread X Time") 
+        {
             ThreadExecutions = executions;
         }
 
