@@ -1,49 +1,33 @@
-﻿using System.Linq;
-using PrimeNumbersThreaded.Utilities;
-using System;
+﻿using System;
+using System.Linq;
 using System.Windows.Forms;
-using PrimeNumbersThreaded.PrimesSolver;
 using System.Runtime.InteropServices;
+using PrimeNumbersThreaded.Utilities;
+using PrimeNumbersThreaded.Forms;
 
 namespace PrimeNumbersThreaded
 {
     class Program
     {
-        [DllImport("kernel32.dll", SetLastError = true)]
-        [return: MarshalAs(UnmanagedType.Bool)]
-        static extern bool AllocConsole();
-
         [STAThread]
         static void Main(string[] args)
         {
             Application.EnableVisualStyles(); // Enable Window Forms visual styles
+            Application.SetCompatibleTextRenderingDefault(false);
             AllocConsole(); // Enable console
 
-            SolvePrimes();
+            ShowPrimesSolveOptions();
         }
 
-        private static void SolvePrimes()
+        private static void ShowPrimesSolveOptions()
         {
-            // dataset numbers
-            var numbers = Utils.LoadNumbersFromCsv(csvFileName: "Dataset2.csv").ToList();
+            var numbers = Utils.LoadNumbersFromCsv(csvFileName: "Dataset.csv").ToList();
 
-            Console.WriteLine($"Analyzing {numbers.Count} numbers");
-
-            #region Simple solving
-            var simpleSolver = new SimpleSolver();
-            var primeNumbers = simpleSolver.Solve(numbers, out var simpleExecutionTime);
-
-            Console.WriteLine($"Found {primeNumbers} primes in {simpleExecutionTime} ms without threads");
-            #endregion
-
-            #region Threaded solving
-            var threadedSolver = new ThreadedSolver { ThreadsAmount = 5 };
-            var primeNumbersThreaded = threadedSolver.Solve(numbers, out var threadedExecutionTime);
-
-            Console.WriteLine($"Found {primeNumbersThreaded} primes in {threadedExecutionTime} ms with threads");
-            #endregion
-
-            Console.ReadLine();
+            Application.Run(new GraphicsOptionsForm(numbers));
         }
+
+        [DllImport("kernel32.dll", SetLastError = true)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        static extern bool AllocConsole();
     }
 }
