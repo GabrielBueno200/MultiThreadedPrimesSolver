@@ -1,4 +1,4 @@
-# PrimesSolverMultiThreaded
+# Multithreaded Primes Solver
 
 <p align="center">
   <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/GabrielBueno200/PrimesSolverMultiThreaded">
@@ -50,12 +50,22 @@ In the main window you can choose some graphs options based in different solving
 
 ![image](https://user-images.githubusercontent.com/56837996/158877974-97b05c10-587a-4be6-bcb5-ef3192f1eb7b.png)
 
+You can choose the options below:
+
+- 1. Serial Solution X Threaded Solution: this option will execute a range starting in 1 (serial solution) until an input thread amount, iterating this range and running the program with a thread amount relative to the current iteration.
+
+- 2. Thread Amount X Execution Time: this option will ask the user three inputs, the number of times that the solution will be executed relative to the other inputs, a lower thread amount and a higher thread amount.
+
+- 3. Thread Amount X SpeedUp: this option will run the program 50 for each thread amount in a range from 2 to 452 threads.
+
 ## Graphs
-- Threads Amount X SpeedUp: Error bar chart
+- Threads Amount X SpeedUp (Error bar chart): generated after the option 3 execution 
 
 ![image](https://user-images.githubusercontent.com/56837996/158878017-5f5d338b-4d38-49b7-983b-8014bdf2356c.png)
 
-- Threads Amount X SpeedUp: Line Bar
+- Threads Amount X SpeedUp (Line Bar Chart): generated after the option 3 execution
+
+The main difference to the previous chart is the speedup error, calculated using standard deviation.
 
 ![image](https://user-images.githubusercontent.com/56837996/158878199-f943ed22-f0c2-4468-b3b3-6c34ba89efc8.png)
 
@@ -71,7 +81,7 @@ Based in the best execution case, we use the amount of threads, the speedup and 
 <!-- HOW TO RUN -->
 ## 🚀 How To Run
  
-First, run the commands above:
+First, run the commands below:
 
 ```bash
 dotnet run build
@@ -79,4 +89,4 @@ dotnet run build
 dotnet run
 ```
 
-The GUI will open and will be ready to be used.
+The GUI will open and ready to be used.
