@@ -6,13 +6,12 @@ using Microsoft.VisualBasic;
 using PrimeNumbersThreaded.Tests;
 using System.Collections.Generic;
 using PrimeNumbersThreaded.Graphics;
-using PrimeNumbersThreaded.Extensions;
 
 namespace PrimeNumbersThreaded.Forms
 {
     public sealed class GraphicsOptionsForm : Form
     {
-        private readonly string Title = "Primes Solver";
+        private readonly string Title = "Primes Solver Multithreaded";
         private readonly IList<int> Numbers;
 
         private System.ComponentModel.IContainer Components;
@@ -26,8 +25,8 @@ namespace PrimeNumbersThreaded.Forms
         private void AddRepeatedSolveExecutionsButton()
         {
             var button = new Button();
-            button.Location = new Point(60, 80);
-            button.Text = "Check serial solution vs threaded solution";
+            button.Location = new Point(80, 80);
+            button.Text = "Serial solution vs Threaded solution - Single execution";
             button.AutoSize = true;
             button.Padding = new Padding(6);
             button.Font = new Font("Arial", 12);
@@ -65,8 +64,8 @@ namespace PrimeNumbersThreaded.Forms
                     // Run executions returning tuple with threads amount and time execution median
                     var executionTimesMedians = threadsAmountsToExecute.Select(threadsAmount =>
                     {
-                        var (_, executionTimeMedian) = 
-                            Executer.RepeatThreadedSolverExecutions(Numbers, executionsAmount, threadsAmount);
+                        var executionTimeMedian = 
+                            Executer.RepeatThreadedSolverExecutions(Numbers, executionsAmount, threadsAmount).Item2;
 
                         return (threadsAmount, executionTimeMedian);
                     });
@@ -83,8 +82,8 @@ namespace PrimeNumbersThreaded.Forms
         private void AddRepeatedThreadsSpeedupGraphic()
         {
             var button = new Button();
-            button.Location = new Point(70, 140);
-            button.Text = "Check Threads amount vs Speed";
+            button.Location = new Point(83, 140);
+            button.Text = "Threads amount vs SpeedUp - Repeated Executions";
             button.AutoSize = true;
             button.Padding = new Padding(6);
             button.Font = new Font("Arial", 12);
@@ -93,29 +92,58 @@ namespace PrimeNumbersThreaded.Forms
             {
                 Console.Clear();
 
-                Interaction.MsgBox("This option will execute each thread 50 times");
+                Interaction.MsgBox("This option will execute 1 to 452 threads 50 times, calculating the serial fraction of the system.");
 
-                var totalThreadsAmount = Convert.ToInt32(Interaction.InputBox("Type the threads amount", "Threads amount"));
+                var totalThreadsAmount = 452;
 
                 // Run executions
-                var executions = new List<(int, double)>();
-                for(var threadAmount = 1; threadAmount <= totalThreadsAmount; threadAmount++)
-                    executions.Add(Executer.RepeatThreadedSolverExecutions(Numbers, 50, threadAmount));
+                int timesToExecute = 50;
+                double simpleSolveMedianTime = 0;
+
+                var executions = new List<(int, double, double)>();
+                for (var threadAmount = 1; threadAmount <= totalThreadsAmount; threadAmount++)
+                {   
+                    if (threadAmount == 1)
+                    {
+                        simpleSolveMedianTime = Executer.RepeatThreadedSolverExecutions(Numbers, timesToExecute, threadAmount).Item2;
+                        continue;
+                    }
+
+                    executions.Add(Executer.RepeatThreadedSolverExecutions(Numbers, timesToExecute, threadAmount, simpleSolveMedianTime));
+                };
+
+                var threadsSpeedUps = new List<(int, double)>();
+                var threadsSpeedUpsErrors = new List<(int, double, double)>();
+                var threadsSpeedUpsTimes = new List<(int, double, double)>();
 
                 // SpeedUp calculation
-                var simpleSolveMedianTime = executions.First().Item2;
-                var threadsSpeedUps = executions.Select(x =>
+                executions.ForEach(execution =>
                 {
-                    var (threadsAmount, executionTimeMedian) = x;
+                    var (threadsAmount, executionTimeMedian, speedUpError) = execution;
                     var speedUp = simpleSolveMedianTime / executionTimeMedian;
                     
-                    return (threadsAmount, speedUp);
+                    threadsSpeedUpsErrors.Add((threadsAmount, speedUp, speedUpError));
+                    threadsSpeedUpsTimes.Add((threadsAmount, executionTimeMedian, speedUp));
+                    threadsSpeedUps.Add((threadsAmount, speedUp));
                 });
 
-                var speedUpsError = threadsSpeedUps.Select(x => x.speedUp).StandardDeviation();
+                // Plot line graphic
+                new ThreadBySpeedUpLineGraphic(threadsSpeedUps).Show();
 
-                // Plot graphic
-                new ThreadBySpeedUpGraphic(threadsSpeedUps, speedUpsError).Show();
+                // Plot error graphic
+                threadsSpeedUpsErrors = threadsSpeedUpsErrors.Where((_, i) => i % 10 == 0).ToList(); // skip elements with step 10
+
+                new ThreadBySpeedUpErrorGraphic(threadsSpeedUpsErrors).Show();
+
+                // Calculate the serial fraction
+                var bestExecution = Executer.ExecuteSerialFraction(threadsSpeedUpsTimes);
+
+                Interaction.MsgBox($"Best execution: \n"
+                                   + $"Threads amount: {bestExecution.Item1}\n"
+                                   + $"Execution time median: {bestExecution.Item2} ms\n"
+                                   + $"SpeedUp: {bestExecution.Item3}\n\n"
+                                   + $"Serial Fraction: {bestExecution.Item4}"
+                                  );
             };
 
             Controls.Add(button); 
@@ -125,7 +153,7 @@ namespace PrimeNumbersThreaded.Forms
         {
             var button = new Button();
             button.Location = new Point(70, 20);
-            button.Text = "Check Threads amount vs Time";
+            button.Text = "Threads Amount vs Execution Time - Repeated Executions";
             button.AutoSize = true;
             button.Padding = new Padding(6);
             button.Font = new Font("Arial", 12);
@@ -163,7 +191,7 @@ namespace PrimeNumbersThreaded.Forms
             SuspendLayout();
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(400, 300);
+            ClientSize = new Size(550, 220);
             Name = Title;
             Text = Title;
             Load += new EventHandler((sender, e) => LoadForm());

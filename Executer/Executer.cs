@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Collections.Generic;
 using PrimeNumbersThreaded.Extensions;
 using PrimeNumbersThreaded.PrimesSolver;
@@ -35,9 +36,10 @@ namespace PrimeNumbersThreaded.Tests
         /// <param name="numbers">numbers list</param>
         /// <param name="timesToExecute">number of executions</param>
         /// <param name="threadsAmount">threads amount</param>
-        public static (int, double) RepeatThreadedSolverExecutions(IList<int> numbers, int timesToExecute, int threadAmount)
+        public static (int, double, double) RepeatThreadedSolverExecutions(IList<int> numbers, int timesToExecute, int threadAmount, double? simpleSolveMedian = null)
         {
             var executions = new List<long>();
+            var speedUps = new List<double>();
 
             Console.WriteLine($"Executions with {threadAmount} threads");
             Console.WriteLine($"========================================");
@@ -45,13 +47,17 @@ namespace PrimeNumbersThreaded.Tests
             for (var executionIndex = 1; executionIndex <= timesToExecute; executionIndex++)
             {
                 Console.Write($"Execution {executionIndex} - ");
-                if (threadAmount > 0)
+                if (threadAmount > 1)
                 {
                     var primesAmount = new ThreadedSolver { ThreadsAmount = threadAmount }.Solve(numbers, out var threadedSolverExecutionTime);
                     executions.Add(threadedSolverExecutionTime);
 
+                    var speedUp = simpleSolveMedian / threadedSolverExecutionTime;
+                    speedUps.Add(speedUp ?? 0);
+
                     Console.WriteLine($"{primesAmount} primes found");
-                    Console.WriteLine($"finished in {threadedSolverExecutionTime} ms");
+                    Console.WriteLine($"SpeedUp: {Math.Round(speedUp ?? 0, 2)}");
+                    Console.WriteLine($"Finished in {threadedSolverExecutionTime} ms");
                 }
                 else
                 {
@@ -59,17 +65,29 @@ namespace PrimeNumbersThreaded.Tests
                     executions.Add(simpleSolverExecutionTime);
 
                     Console.WriteLine($"{primesAmount} primes found");
-                    Console.WriteLine($"finished in {simpleSolverExecutionTime} ms");
+                    Console.WriteLine($"Finished in {simpleSolverExecutionTime} ms");
                 }
 
                 Console.WriteLine();
             }
 
             var median = executions.Median();
+            var speedUpError = speedUps.StandardDeviation();
+
+            Console.Write(threadAmount > 1 ? $"SpeedUp error: {speedUpError}\n" : string.Empty);
             Console.WriteLine($"Execution time median: {median} ms\n");
 
-            return (threadAmount, median);
+            return (threadAmount, median, speedUpError);
         }
 
+        public static (int, double, double, double) ExecuteSerialFraction(IList<(int, double, double)> threadsSpeedUpsTimes)
+        {
+            var bestSpeedUpExecution = threadsSpeedUpsTimes.Where(x => x.Item3 == threadsSpeedUpsTimes.Max(x => x.Item3)).FirstOrDefault();
+            var (threadsAmount, time, speedUp) = bestSpeedUpExecution;
+
+            var serialFrac = (threadsAmount - speedUp) / (speedUp * (threadsAmount - 1));
+
+            return (threadsAmount, time, speedUp, serialFrac);
+        }
     }
 }

@@ -1,5 +1,7 @@
-﻿using System;
+﻿using PrimeNumbersThreaded.Utilities;
+using System;
 using System.Drawing;
+using System.Drawing.Imaging;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 
@@ -51,17 +53,16 @@ namespace PrimeNumbersThreaded.Graphics
             chart.Legends.Add(legend);
 
             chart.Name = title;
-            chart.Size = new Size(1000, 700);
+            chart.Size = new Size(900, 450);
 
             chart.Location = new Point(0, 0);
         }
 
         private void InitializeForm(string title)
         {
-            AutoScaleDimensions = new SizeF(12F, 26F);
             AutoScaleMode = AutoScaleMode.Font;
-            
-            ClientSize = new Size(1000, 700);
+
+            ClientSize = new Size(900, 450);
             Controls.Add(chart);
 
             Name = title;
@@ -80,5 +81,6 @@ namespace PrimeNumbersThreaded.Graphics
             }
             base.Dispose(disposing);
         }
+      
     }
 }

@@ -7,10 +7,13 @@ namespace PrimeNumbersThreaded.Utilities
 {
     public static class Utils
     {
+        public static string GetCurrentPath() =>
+            Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)
+            .Replace("\\bin\\Debug\\net5.0-windows", "");
+
         public static IEnumerable<int> LoadNumbersFromCsv(string csvFileName)
         {
-            var rootPath = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location)
-                            .Replace("\\bin\\Debug\\net5.0-windows", "");
+            var rootPath = GetCurrentPath();
             var csvPath = Path.Combine(rootPath, csvFileName);
 
             string line = "";

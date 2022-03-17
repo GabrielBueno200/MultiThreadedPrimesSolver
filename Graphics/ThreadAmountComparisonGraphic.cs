@@ -6,11 +6,11 @@ using System.Windows.Forms.DataVisualization.Charting;
 
 namespace PrimeNumbersThreaded.Graphics
 {
-    public class ThreadAmountComparisonGraphic : Graphic
+    public sealed class ThreadAmountComparisonGraphic : Graphic
     {
         private IEnumerable<(int, double)> SolveTimesMedians { get; set; }
 
-        public ThreadAmountComparisonGraphic(IEnumerable<(int, double)> solveTimesMedians) : base("Comparison betwen none, few and many threads")
+        public ThreadAmountComparisonGraphic(IEnumerable<(int, double)> solveTimesMedians) : base("Comparison betwen none, few and many threads X Execution Time")
         {
             SolveTimesMedians = solveTimesMedians;
         }
