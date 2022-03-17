@@ -47,17 +47,21 @@ C# / .NET 5 console application that simulates differents scenarios to solve the
 
 ## GUI
 In the main window you can choose some graphs options based in different solving approaches.
+
 ![image](https://user-images.githubusercontent.com/56837996/158877974-97b05c10-587a-4be6-bcb5-ef3192f1eb7b.png)
 
 ## Graphs
 - Threads Amount X SpeedUp: Error bar chart
+
 ![image](https://user-images.githubusercontent.com/56837996/158878017-5f5d338b-4d38-49b7-983b-8014bdf2356c.png)
 
 - Threads Amount X SpeedUp: Line Bar
+
 ![image](https://user-images.githubusercontent.com/56837996/158878199-f943ed22-f0c2-4468-b3b3-6c34ba89efc8.png)
 
 ## Serial Fraction
 Based in the best execution case, we use the amount of threads, the speedup and the execution time of this case to calculate the serial fraction
+
 ![image](https://user-images.githubusercontent.com/56837996/158878228-f25d8144-5226-4cd6-8896-7261c4fc94c2.png)
 
 
