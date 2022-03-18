@@ -37,41 +37,13 @@ namespace PrimeNumbersThreaded.Forms
 
                 try
                 {
-                    int fewThreadAmount = 0, manyThreadAmount = 0;
-
-                    #region user interaction
-                    var executionsAmount = Convert.ToInt32(
-                        Interaction.InputBox("Type the number of times that all scenarios will run", "Execution times amount")
-                    );
-
-                    while (fewThreadAmount < 2 || fewThreadAmount > 5)
-                    {
-                        fewThreadAmount = Convert.ToInt32(
-                            Interaction.InputBox("Type an amount of threads between 2 and 5", "Lower threads amount")
-                        );
-                    }
-
-                    while (manyThreadAmount < 5 || manyThreadAmount > 60)
-                    {
-                        manyThreadAmount = Convert.ToInt32(
-                            Interaction.InputBox("Type an amount of threads between 5 and 60", "Higher threads amount")
-                        );
-                    }
-                    #endregion
-
-                    var threadsAmountsToExecute = new List<int> { 0, fewThreadAmount, manyThreadAmount };
-
-                    // Run executions returning tuple with threads amount and time execution median
-                    var executionTimesMedians = threadsAmountsToExecute.Select(threadsAmount =>
-                    {
-                        var executionTimeMedian = 
-                            Executer.RepeatThreadedSolverExecutions(Numbers, executionsAmount, threadsAmount).Item2;
-
-                        return (threadsAmount, executionTimeMedian);
-                    });
+                    var threadsAmount = Convert.ToInt32(Interaction.InputBox("Type the threads amount", "Threads amount"));
+                    
+                    // Run executions
+                    var threadExecutions = Executer.ExecuteFromThreadRange(Numbers, threadsAmount);
                     
                     // Plot graphic
-                    new ThreadAmountComparisonGraphic(executionTimesMedians).Show();
+                    new ThreadByTimeGraphic(threadExecutions).Show(); 
                 }
                 catch (Exception) { }
             };
@@ -164,13 +136,41 @@ namespace PrimeNumbersThreaded.Forms
 
                 try
                 {
-                    var threadsAmount = Convert.ToInt32(Interaction.InputBox("Type the threads amount", "Threads amount"));
-                    
-                    // Run executions
-                    var threadExecutions = Executer.ExecuteFromThreadRange(Numbers, threadsAmount);
+ 		    int fewThreadAmount = 0, manyThreadAmount = 0;
+
+                    #region user interaction
+                    var executionsAmount = Convert.ToInt32(
+                        Interaction.InputBox("Type the number of times that all scenarios will run", "Execution times amount")
+                    );
+
+                    while (fewThreadAmount < 2 || fewThreadAmount > 5)
+                    {
+                        fewThreadAmount = Convert.ToInt32(
+                            Interaction.InputBox("Type an amount of threads between 2 and 5", "Lower threads amount")
+                        );
+                    }
+
+                    while (manyThreadAmount < 5 || manyThreadAmount > 60)
+                    {
+                        manyThreadAmount = Convert.ToInt32(
+                            Interaction.InputBox("Type an amount of threads between 5 and 60", "Higher threads amount")
+                        );
+                    }
+                    #endregion
+
+                    var threadsAmountsToExecute = new List<int> { 0, fewThreadAmount, manyThreadAmount };
+
+                    // Run executions returning tuple with threads amount and time execution median
+                    var executionTimesMedians = threadsAmountsToExecute.Select(threadsAmount =>
+                    {
+                        var executionTimeMedian = 
+                            Executer.RepeatThreadedSolverExecutions(Numbers, executionsAmount, threadsAmount).Item2;
+
+                        return (threadsAmount, executionTimeMedian);
+                    });
                     
                     // Plot graphic
-                    new ThreadByTimeGraphic(threadExecutions).Show();
+                    new ThreadAmountComparisonGraphic(executionTimesMedians).Show();
                 }
                 catch (Exception) { }
             };
