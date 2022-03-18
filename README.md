@@ -42,7 +42,7 @@
 
 
 <!-- ABOUT THE PROJECT -->
-## 💻 About The Project - Multithread Prime Solver
+## 💻 About The Project - Multithread Primes Solver
 C# / .NET 5 console application that simulates differents scenarios to solve the amount of prime numbers in a numeric dataset, using threaded and serial approaches to do it.
 
 ## GUI
@@ -85,6 +85,7 @@ Based in the best execution case, we use the amount of threads, the speedup and 
 
 ## ❗ Requirements
 * .NET 5 sdk or later.
+* Windows OS for a better experience due to Windows Forms (you can also use Mono to run on Linux/MacOS)
 
 <!-- HOW TO RUN -->
 ## 🚀 How To Run
@@ -94,6 +95,7 @@ First, run the commands below:
 ```bash
 dotnet run build
 # or
+dotnet build
 dotnet run
 ```
 
