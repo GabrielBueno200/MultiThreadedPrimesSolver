@@ -54,7 +54,7 @@ You can choose the options below:
 
 - 1. Serial Solution X Threaded Solution: this option will execute a range starting in 1 (serial solution) until an input thread amount, iterating this range and running the program with a thread amount relative to the current iteration.
 
-- 2. Thread Amount X Execution Time: this option will ask the user three inputs, the number of times that the solution will be executed relative to the other inputs, a lower thread amount and a higher thread amount.
+- 2. Thread Amount X Execution Time: this option will ask the user three inputs, the number of times that the solution will be executed relative to the two other inputs, a lower thread amount and a higher thread amount.
 
 - 3. Thread Amount X SpeedUp: this option will run the program 50 for each thread amount in a range from 2 to 452 threads.
 
@@ -70,6 +70,12 @@ The main difference to the previous chart is the speedup error, calculated using
 
 ![image](https://user-images.githubusercontent.com/56837996/158878199-f943ed22-f0c2-4468-b3b3-6c34ba89efc8.png)
 ![image](https://user-images.githubusercontent.com/56837996/159025584-0f10e165-0415-4923-9407-33d2703dc492.png)
+
+- Thread X Time (Line chart): generated after the option 2 execution
+![image](https://user-images.githubusercontent.com/56837996/159028122-8d347fd6-7db5-4c69-8942-5e0edd0e0e3f.png)
+
+- Comparison between none, few and many threads X Executed Time (Bar Chart): generated after option 1 execution
+![image](https://user-images.githubusercontent.com/56837996/159028496-a401782d-9bfd-4e71-b193-7904008851c8.png)
 
 ## Serial Fraction
 Based in the best execution case, we use the amount of threads, the speedup and the execution time of this case to calculate the serial fraction
