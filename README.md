@@ -62,12 +62,14 @@ You can choose the options below:
 - Threads Amount X SpeedUp (Error bar chart): generated after the option 3 execution 
 
 ![image](https://user-images.githubusercontent.com/56837996/158878017-5f5d338b-4d38-49b7-983b-8014bdf2356c.png)
+![image](https://user-images.githubusercontent.com/56837996/159025515-1dbe74cb-2ada-4caf-8dc4-00e185651813.png)
 
 - Threads Amount X SpeedUp (Line Bar Chart): generated after the option 3 execution
 
 The main difference to the previous chart is the speedup error, calculated using standard deviation.
 
 ![image](https://user-images.githubusercontent.com/56837996/158878199-f943ed22-f0c2-4468-b3b3-6c34ba89efc8.png)
+![image](https://user-images.githubusercontent.com/56837996/159025584-0f10e165-0415-4923-9407-33d2703dc492.png)
 
 ## Serial Fraction
 Based in the best execution case, we use the amount of threads, the speedup and the execution time of this case to calculate the serial fraction
