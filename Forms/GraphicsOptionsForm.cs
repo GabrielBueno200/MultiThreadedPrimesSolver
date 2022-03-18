@@ -11,7 +11,7 @@ namespace PrimeNumbersThreaded.Forms
 {
     public sealed class GraphicsOptionsForm : Form
     {
-        private readonly string Title = "Primes Solver Multithreaded";
+        private readonly string Title = "Multithreaded Primes Solver";
         private readonly IList<int> Numbers;
 
         private System.ComponentModel.IContainer Components;

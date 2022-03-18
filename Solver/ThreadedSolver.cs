@@ -15,19 +15,18 @@ namespace PrimeNumbersThreaded.PrimesSolver
         /// <inheritdoc/>
         public override int Solve(IList<int> numbers, out long elapsedMs)
         {
-            var primesAmountInIntervals = new List<int>();
-
             var timer = new Stopwatch();
             timer.Start();
 
             #region solving with threads
             var numbersAmount = numbers.Count;
+            var primesAmountInIntervals = new List<int>();
+            
             var step = Convert.ToInt32(numbersAmount / ThreadsAmount);
 
             for (int i = 0, intervalBegin = 0; i < ThreadsAmount; i++, intervalBegin += step)
             {
                 var willMissNumbers = intervalBegin + step < numbers.Count && i + 1 >= ThreadsAmount;
-
                 if (willMissNumbers) step = numbersAmount - intervalBegin;
 
                 var intervalNumbers = numbers.ToList().GetRange(intervalBegin, step);
@@ -37,8 +36,7 @@ namespace PrimeNumbersThreaded.PrimesSolver
                 Threads.Add(thread);
             }
 
-            foreach (var thread in Threads)
-                thread.Join(); // wait thread finish
+            Threads.ForEach(thread => thread.Join()); // wait all threads finish
 
             var totalPrimesAmount = primesAmountInIntervals.Sum();
             #endregion

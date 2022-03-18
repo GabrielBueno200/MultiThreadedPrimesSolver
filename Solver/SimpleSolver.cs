@@ -13,7 +13,6 @@ namespace PrimeNumbersThreaded.PrimesSolver
             var primesAmount = FindPrimesAmount(numbers);
 
             timer.Stop();
-
             elapsedMs = timer.ElapsedMilliseconds;
 
             return primesAmount;
