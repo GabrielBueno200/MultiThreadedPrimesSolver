@@ -1,15 +1,15 @@
 # Multithreaded Primes Solver
 
 <p align="center">
-  <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/GabrielBueno200/PrimesSolverMultiThreaded">
+  <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/GabrielBueno200/MultiThreadedPrimesSolver">
 
-  <img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/GabrielBueno200/PrimesSolverMultiThreaded">
+  <img alt="GitHub repo size" src="https://img.shields.io/github/repo-size/GabrielBueno200/MultiThreadedPrimesSolver">
   
   <a href="https://github.com/GabrielBueno200/monty-hall">
-    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/GabrielBueno200/PrimesSolverMultiThreaded">
+    <img alt="GitHub last commit" src="https://img.shields.io/github/last-commit/GabrielBueno200/MultiThreadedPrimesSolver">
   </a>
   
-   <img alt="GitHub" src="https://img.shields.io/github/license/GabrielBueno200/PrimesSolverMultiThreaded">
+   <img alt="GitHub" src="https://img.shields.io/github/license/GabrielBueno200/MultiThreadedPrimesSolver">
 </p>
 
 <!-- PROJECT LOGO -->
