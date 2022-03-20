@@ -45,6 +45,16 @@
 ## 💻 About The Project - Multithread Primes Solver
 C# / .NET 5 console application that simulates differents scenarios to solve the amount of prime numbers in a numeric dataset, using threaded and serial approaches to do it.
 
+This project is a complement of [WebisD/prime-with-threads](https://github.com/WebisD/prime-with-threads), we compared the multithreading performance using Python and C#.
+
+<!-- REPORT -->
+## 📖 Document about the experimentation
+You can read the report doc about the experimentation:   
+
+<a href="https://gabrielbueno200.github.io/MultiThreadedPrimesSolver/main.pdf" target="_blank">
+  <img alt="a" src="https://img.shields.io/badge/read-documentation-blue?style=for-the-badge">
+</a>
+
 ## GUI
 In the main window you can choose some graphs options based in different solving approaches.
 
