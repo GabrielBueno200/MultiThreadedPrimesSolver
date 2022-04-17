@@ -26,7 +26,7 @@ namespace PrimeNumbersThreaded.PrimesSolver
 
             for (int i = 0, intervalBegin = 0; i < ThreadsAmount; i++, intervalBegin += step)
             {
-                var willMissNumbers = intervalBegin + step < numbers.Count && i + 1 >= ThreadsAmount;
+                var willMissNumbers = intervalBegin + step < numbersAmount && i + 1 >= ThreadsAmount;
                 if (willMissNumbers) step = numbersAmount - intervalBegin;
 
                 var intervalNumbers = numbers.ToList().GetRange(intervalBegin, step);
